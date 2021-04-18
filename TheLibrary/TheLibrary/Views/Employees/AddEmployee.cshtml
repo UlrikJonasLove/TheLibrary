@@ -1,0 +1,70 @@
+﻿@model Employee
+@{
+    ViewData["Title"] = "Add Employee";
+}
+
+<h1>Add New Employee</h1>
+
+<h4>Employee</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddEmployee">
+            <div id="Types" class="form-group">
+                <label class="control-label">What kind of Employee do you wish to add?</label>
+                <select class="custom-select">
+                    <option>Select Employee type</option>
+                    <option value="RegularEmployee">Regular Employee</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Ceo">CEO</option>
+                </select>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div id="TheFirstName" class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div id="TheLastName" class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div id="TheSalary" class="form-group">
+                <p>Add a rank number between 1-10 to calculate salary</p>
+                <label asp-for="Salary" class="control-label"></label>
+                <input asp-for="Salary" class="form-control" />
+                <span asp-validation-for="Salary" class="text-danger"></span>
+            </div>
+            <div id="TheCeo" class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsCEO" /> @Html.DisplayNameFor(model => model.IsCEO)
+                </label>
+            </div>
+            <div id="TheManager" class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsManager" /> @Html.DisplayNameFor(model => model.IsManager)
+                </label>
+            </div>
+            <div id="TheManagerId" class="form-group">
+                <p id="pId"></p>
+                <label asp-for="ManagerId" class="control-label"></label>
+                <select name="ManagerId" asp-for="ManagerId" class="form-control">
+                    @await Component.InvokeAsync("Managers")
+                </select>
+                <span asp-validation-for="ManagerId" class="text-danger"></span>
+            </div>
+            <div id="Btn" class="form-group">
+                <input type="submit" value="Add Employee" class="btn btn-outline-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-outline-dark">Back</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,117 @@
+﻿@model CategoriesAndLibraryViewModel
+
+@{
+    var Category = Model.Categories;
+    var LibraryItems = Model.LibraryItems;
+    var lib = new LibraryItem();
+    ViewData["Title"] = "Library Items";
+}
+
+<h1>All Library Items</h1>
+
+<p>
+    <a asp-action="AddItem" class="btn btn-outline-success">Add New Item</a>
+</p>
+
+<form asp-action="Index" method="get">
+    <div>
+        <p>
+            Find by Type: <select type="text" name="filterString" value="@ViewData["CurrentFilter"]" class="custom-select">
+                <option selected>Select a type</option>
+                <option value="Book">Book</option>
+                <option value="AudioBook">AudioBook</option>
+                <option value="ReferenceBook">Reference Book</option>
+                <option value="DVD">DVD</option>
+            </select>
+            <hr />
+            <input type="submit" value="Filter" class="btn btn-outline-success" />
+        </p>
+    </div>
+</form>
+
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => lib.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => lib.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => lib.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => lib.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => lib.Pages)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => lib.RunTimeMinutes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => lib.IsBorrowable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => lib.Borrower)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => lib.Date)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (LibraryItems.Count() > 0)
+        {
+            @foreach (var item in LibraryItems)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                        @(string.Concat(item.Title.Split(" ").Select(w => w.First())).ToUpper())
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pages)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RunTimeMinutes)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsBorrowable)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Borrower)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td class="btn-group-toggle" role="group">
+                        <a asp-action="EditItem" asp-route-id="@item.Id" class="btn btn-outline-success">Check In <br /> Check Out</a>
+                        <br />
+                        <a asp-action="ItemDetails" asp-route-id="@item.Id" class="btn btn-outline-info">Details</a>
+                        <a asp-action="RemoveItem" asp-route-id="@item.Id" class="btn btn-outline-warning">Remove</a>
+                    </td>
+                </tr>
+
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="12">
+                    <div class="alert alert-danger">No Library Items To Show</div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

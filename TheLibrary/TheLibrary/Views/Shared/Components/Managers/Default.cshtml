@@ -1,0 +1,7 @@
+﻿@model IEnumerable<Employee>
+
+
+@foreach (var e in Model)
+{
+    <option value="@e.Id">@e.Id - @e.FirstName @e.LastName</option>
+}

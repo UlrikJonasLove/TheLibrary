@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Employee>
+
+@{
+    ViewData["Title"] = "Manage Employees";
+}
+
+<h1>Manage Employees</h1>
+
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCEO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsManager)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ManagerId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCEO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsManager)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManagerId)
+            </td>
+            <td>
+                <a asp-action="EditEmployee" asp-route-id="@item.Id" class="btn btn-outline-success">Edit</a> |
+                <a asp-action="EmployeeDetails" asp-route-id="@item.Id" class="btn btn-outline-info">Details</a> |
+                <a asp-action="RemoveEmployee" asp-route-id="@item.Id" class="btn btn-outline-warning">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
